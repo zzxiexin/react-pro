@@ -1,7 +1,7 @@
 # 第一阶段：构建前端代码
 
 # 基于 Node 镜像构建应用
-FROM node:14 AS builder
+FROM node:16 AS builder
 
 # 安装 Git
 RUN apt-get update && apt-get install -y git
@@ -12,7 +12,7 @@ WORKDIR /app
 RUN git clone ${git_url} .
 
 # 安装依赖并构建项目
-RUN npm install && npm run build
+RUN npx pnpm install && pnpm run build
 
 
 # 第二阶段：设置 Nginx 服务器
