@@ -4,7 +4,7 @@ const Login = () => {
   const { update_user_info, name } = useAuth();
   const [tmp, setTmp] = useState('');
   useEffect(() => {
-    const { name } = JSON.parse(localStorage.getItem('user_info') || '');
+    const { name } = JSON.parse(localStorage.getItem('user_info') || '{}');
     update_user_info({ name });
   }, []);
   const updateInfo = (info: { name: string }) => {
