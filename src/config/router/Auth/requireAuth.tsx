@@ -1,10 +1,10 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useAuth from '@config/router/Auth/useAuth';
+import useLoginStore from '@src/store';
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const auth = useAuth();
+  const name = useLoginStore((state) => state.name);
   const location = useLocation();
 
-  if (!auth.name) {
+  if (!name) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
