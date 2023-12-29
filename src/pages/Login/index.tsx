@@ -4,6 +4,7 @@ const Login = () => {
   const [tmp, setTmp] = useState('');
   const name = useLoginStore((state) => state.name);
   const doLogin = useLoginStore((state) => state.doLogin);
+  const loginOut = useLoginStore((state) => state.loginOut);
   // 初始化时，取本地数据
   useEffect(() => {
     if (!name) {
@@ -21,7 +22,17 @@ const Login = () => {
   return (
     <div>
       {name ? (
-        `welcome ${name}`
+        <>
+          {`welcome ${name}`}
+          <button
+            onClick={() => {
+              loginOut();
+              localStorage.removeItem('user_info');
+            }}
+          >
+            logout
+          </button>
+        </>
       ) : (
         <>
           <input
