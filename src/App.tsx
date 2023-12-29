@@ -4,11 +4,12 @@ import Layout from '@pages/Layout';
 import { AuthContent } from '@config/router/Auth/useAuth';
 import RequireAuth from '@src/config/router/Auth/requireAuth';
 import { useState } from 'react';
+import type { USER_INFO } from '@config/router/Auth/useAuth';
 
 function App() {
-  const [userInfo, setUserInfo] = useState<{ name: string }>({ name: '' });
+  const [userInfo, setUserInfo] = useState<USER_INFO>({ name: '' });
   return (
-    <AuthContent.Provider value={{ name: userInfo?.name, update_user_info: (arg) => setUserInfo(arg) }}>
+    <AuthContent.Provider value={{ name: userInfo?.name, updateUserInfo: (arg) => setUserInfo(arg as USER_INFO) }}>
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>

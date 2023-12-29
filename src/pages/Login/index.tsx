@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
 import useAuth from '@src/config/router/Auth/useAuth';
 const Login = () => {
-  const { update_user_info, name } = useAuth();
+  const { name, updateUserInfo } = useAuth();
   const [tmp, setTmp] = useState('');
+  // 初始化时，取本地数据
   useEffect(() => {
-    const { name } = JSON.parse(localStorage.getItem('user_info') || '{}');
-    update_user_info({ name });
+    if (!name) {
+      const { name } = JSON.parse(localStorage.getItem('user_info') || '{}');
+      name && updateUserInfo?.({ name });
+    }
   }, []);
-  const updateInfo = (info: { name: string }) => {
-    update_user_info(info);
-    localStorage.setItem('user_info', JSON.stringify(info));
+
+  // 更新用户信息
+  const updateInfo = (userInfo: { name: string }) => {
+    updateUserInfo?.(userInfo);
+    localStorage.setItem('user_info', JSON.stringify(userInfo));
   };
   return (
     <div>

@@ -1,11 +1,15 @@
 import { createContext, useContext } from 'react';
 
-type USER_INFO = {
+export interface USER_INFO {
   name: string;
-  update_user_info: (arg: { name: string }) => void;
-};
+  updateUserInfo?: (arg?: Omit<USER_INFO, 'updateUserInfo'>) => void;
+  [key: string]: unknown;
+}
 
-export const AuthContent = createContext<USER_INFO>({ name: '', update_user_info: () => {} });
+export const AuthContent = createContext<USER_INFO>({
+  name: '',
+  updateUserInfo: () => {},
+});
 
 const useAuth = () => {
   return useContext(AuthContent);
