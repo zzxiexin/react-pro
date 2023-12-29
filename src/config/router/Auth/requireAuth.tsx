@@ -1,7 +1,9 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useLoginStore from '@src/store';
+import type { RootState } from '@store/index';
+import { useSelector } from 'react-redux';
+
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const name = useLoginStore((state) => state.name);
+  const name = useSelector((state: RootState) => state.login.name);
   const location = useLocation();
 
   if (!name) {

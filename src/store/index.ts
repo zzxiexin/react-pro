@@ -1,14 +1,13 @@
-import { create } from 'zustand';
+import { configureStore } from '@reduxjs/toolkit';
+import loginReducer from '@store/slices/login';
 
-export interface USER_INFO {
-  name: string;
-  [key: string]: unknown;
-}
+export const store = configureStore({
+  reducer: {
+    login: loginReducer,
+  },
+});
 
-const useLoginStore = create((set) => ({
-  name: '',
-  doLogin: (arg: USER_INFO) => set((state: USER_INFO) => ({ ...state, ...arg })),
-  loginOut: () => set({ name: '' }),
-}));
-
-export default useLoginStore;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;

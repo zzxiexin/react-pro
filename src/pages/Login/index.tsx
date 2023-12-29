@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
-import useLoginStore from '@store/index';
+import type { RootState } from '@store/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, loginOut } from '@store/slices/login';
+
 const Login = () => {
   const [tmp, setTmp] = useState('');
-  const name = useLoginStore((state) => state.name);
-  const doLogin = useLoginStore((state) => state.doLogin);
-  const loginOut = useLoginStore((state) => state.loginOut);
+  const name = useSelector((state: RootState) => state.login.name);
+  const dispatch = useDispatch();
+
   // 初始化时，取本地数据
   useEffect(() => {
     if (!name) {
       const { name } = JSON.parse(localStorage.getItem('user_info') || '{}');
-      name && doLogin?.({ name });
+      name && dispatch?.(login({ name }));
     }
   }, []);
 
   // 更新用户信息
   const updateInfo = (userInfo: { name: string }) => {
-    doLogin?.(userInfo);
+    dispatch?.(login(userInfo));
     localStorage.setItem('user_info', JSON.stringify(userInfo));
   };
 
@@ -26,7 +29,7 @@ const Login = () => {
           {`welcome ${name}`}
           <button
             onClick={() => {
-              loginOut();
+              dispatch?.(loginOut({ name: '' }));
               localStorage.removeItem('user_info');
             }}
           >
