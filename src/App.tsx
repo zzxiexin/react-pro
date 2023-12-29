@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import routes from '@config/router/routes';
 import Layout from '@pages/Layout';
-import { AuthContent } from '@config/router/Auth/useAuth';
+import { AuthContent, USER_INFO } from '@config/router/Auth/useAuth';
 import RequireAuth from '@src/config/router/Auth/requireAuth';
 import { useReducer } from 'react';
 import { initialState, reducer } from '@store/index';
@@ -10,7 +10,9 @@ function App() {
   const [userInfo, dispatch] = useReducer(reducer, initialState);
   console.log('userInfo', userInfo);
   return (
-    <AuthContent.Provider value={{ name: userInfo?.name, update_user_info: (arg) => dispatch({ playload: arg }) }}>
+    <AuthContent.Provider
+      value={{ name: userInfo?.name, updateUserInfo: (arg: USER_INFO) => dispatch({ playload: arg as USER_INFO }) }}
+    >
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>

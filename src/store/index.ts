@@ -1,12 +1,10 @@
-export type StateType = {
-  name: string;
-};
+import type { USER_INFO } from '@config/router/Auth/useAuth';
 
 export type PlayloadType = {
-  playload: StateType;
+  playload: USER_INFO;
 };
 
-export const initialState: StateType = {
+export const initialState: USER_INFO = {
   name: '',
 };
 
