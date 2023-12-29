@@ -3,12 +3,14 @@ import routes from '@config/router/routes';
 import Layout from '@pages/Layout';
 import { AuthContent } from '@config/router/Auth/useAuth';
 import RequireAuth from '@src/config/router/Auth/requireAuth';
-import { useState } from 'react';
+import { useReducer } from 'react';
+import { initialState, reducer } from '@store/index';
 
 function App() {
-  const [userInfo, setUserInfo] = useState<{ name: string }>({ name: '' });
+  const [userInfo, dispatch] = useReducer(reducer, initialState);
+  console.log('userInfo', userInfo);
   return (
-    <AuthContent.Provider value={{ name: userInfo?.name, update_user_info: (arg) => setUserInfo(arg) }}>
+    <AuthContent.Provider value={{ name: userInfo?.name, update_user_info: (arg) => dispatch({ playload: arg }) }}>
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
