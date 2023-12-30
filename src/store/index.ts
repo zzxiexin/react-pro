@@ -1,14 +1,28 @@
-import { create } from 'zustand';
+import { makeAutoObservable, observable, action } from 'mobx';
 
-export interface USER_INFO {
+export type USER_INFO = {
   name: string;
-  [key: string]: unknown;
+};
+class Login {
+  userInfo = {
+    name: '',
+  };
+
+  changeUserInfo(userInfo: USER_INFO) {
+    this.userInfo = { ...userInfo };
+  }
+
+  removeUserInfo() {
+    this.userInfo = { name: '' };
+  }
+
+  constructor() {
+    makeAutoObservable(this, {
+      userInfo: observable,
+      changeUserInfo: action.bound,
+      removeUserInfo: action.bound,
+    });
+  }
 }
 
-const useLoginStore = create((set) => ({
-  name: '',
-  doLogin: (arg: USER_INFO) => set((state: USER_INFO) => ({ ...state, ...arg })),
-  loginOut: () => set({ name: '' }),
-}));
-
-export default useLoginStore;
+export default new Login();

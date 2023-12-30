@@ -1,7 +1,8 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useLoginStore from '@src/store';
+import login from '@store/index';
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const name = useLoginStore((state) => state.name);
+  const { userInfo } = login;
+  const { name } = userInfo;
   const location = useLocation();
 
   if (!name) {
