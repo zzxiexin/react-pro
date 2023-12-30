@@ -26,7 +26,7 @@ const Login = () => {
           {`welcome ${name}`}
           <button
             onClick={() => {
-              removeUserInfo();
+              removeUserInfo?.();
               localStorage.removeItem('user_info');
             }}
           >
