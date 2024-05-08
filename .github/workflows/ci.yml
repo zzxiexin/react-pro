@@ -15,8 +15,7 @@ jobs:
           # 如果配置 themeConfig.lastUpdated 为 false，则不需要添加该参数以加快检出速度
           fetch-depth: 0
       - name: 安装依赖
-        run: npm i pnpm
-        run: pnpm i
+        run: npm i pnpm && pnpm i
       - name: 执行build
         # 文档编译命令，如果是 react 模板需要修改为 npm run docs:build
         run: npm run build
