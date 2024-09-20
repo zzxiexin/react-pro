@@ -1,7 +1,8 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import useAuth from '@config/router/Auth/useAuth';
+import userInfo from '@store/index';
+import { useAtom } from 'jotai';
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const auth = useAuth();
+  const [auth] = useAtom(userInfo);
   const location = useLocation();
 
   if (!auth.name) {

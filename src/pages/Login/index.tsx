@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react';
-import useAuth from '@src/config/router/Auth/useAuth';
+import userInfo from '@store/index';
+import { useAtom } from 'jotai';
+
 const Login = () => {
-  const { name, updateUserInfo } = useAuth();
   const [tmp, setTmp] = useState('');
+  const [userinfo, setUserInfo] = useAtom(userInfo);
   // 初始化时，取本地数据
   useEffect(() => {
-    if (!name) {
+    if (!userinfo?.name) {
       const { name } = JSON.parse(localStorage.getItem('user_info') || '{}');
-      name && updateUserInfo?.({ name });
+      name && setUserInfo?.({ name });
     }
   }, []);
 
   // 更新用户信息
   const updateInfo = (userInfo: { name: string }) => {
-    updateUserInfo?.(userInfo);
+    setUserInfo?.(userInfo);
     localStorage.setItem('user_info', JSON.stringify(userInfo));
   };
   return (
     <div>
-      {name ? (
-        `welcome ${name}`
+      {userinfo?.name ? (
+        `welcome ${userinfo?.name}`
       ) : (
         <>
           <input
